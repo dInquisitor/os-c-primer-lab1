@@ -2,6 +2,6 @@
 #
 # Makefile for list implementation and test file.
 #
-# <Author>
+# Ibukunoluwa Esan
 list: main.c list.c list.h
 		gcc -o list list.c main.c -I. -std=c99
