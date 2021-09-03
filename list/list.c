@@ -45,7 +45,22 @@ int list_length(list_t *l) {
   return count;
 }
 
+/* Back is first element, front is last element 
+ * back ----------- front
+ */
+
 void list_add_to_back(list_t *l, elem value) {
+  node_t* new_node = malloc(sizeof(node_t));
+  new_node->value = value;
+  if (l->head == NULL) {
+    l->head = new_node;
+    return;
+  }
+  new_node->next = l->head;
+  l->head = new_node;
+}
+
+void list_add_to_front(list_t *l, elem value) {
   node_t* new_node = malloc(sizeof(node_t));
   new_node->value = value;
   if (l->head == NULL) {
@@ -58,23 +73,14 @@ void list_add_to_back(list_t *l, elem value) {
   }
   node->next = new_node; 
 }
-void list_add_to_front(list_t *l, elem value) {
-  node_t* new_node = malloc(sizeof(node_t));
-  new_node->value = value;
-  if (l->head == NULL) {
-    l->head = new_node;
-    return;
-  }
-  new_node->next = l->head;
-  l->head = new_node;
-}
+
 void list_add_at_index(list_t *l, elem value, int index) {
   if (index == 0) {
-    list_add_to_front(l, value);
+    list_add_to_back(l, value);
     return;
   }
   if (index > (list_length(l) - 1)) {
-    list_add_to_back(l, value);
+    list_add_to_front(l, value);
     return;
   }
   
@@ -88,9 +94,16 @@ void list_add_at_index(list_t *l, elem value, int index) {
   node->next = new_node;
   new_node->next = curr_next;
 }
-
 elem list_remove_from_back(list_t *l) {
-  /*remove the last one*/
+  /* remove the first one */
+  if (l->head == NULL) {return -1;}
+  elem val = l->head->value;
+  node_t* to_free = l->head;
+  l->head = l->head->next;
+  free(to_free);
+  return val;
+}
+elem list_remove_from_front(list_t *l) {
   /* Should we throw error here? */
   if (l->head == NULL) {return -1;}
   
@@ -109,23 +122,15 @@ elem list_remove_from_back(list_t *l) {
   }
   return val;
 }
-elem list_remove_from_front(list_t *l) {
-  /* remove the first one */
-  if (l->head == NULL) {return -1;}
-  elem val = l->head->value;
-  node_t* to_free = l->head;
-  l->head = l->head->next;
-  free(to_free);
-  return val;
-}
+
 elem list_remove_at_index(list_t *l, int index) {
   int len = list_length(l);
   if(index < 0 || index >= len) {return -1;}
   if(index == 0) {
-    return list_remove_from_front(l);
+    return list_remove_from_back(l);
   }
   if(index == len - 1) {
-    return list_remove_from_back(l);
+    return list_remove_from_front(l);
   }
   node_t* node = l->head;
   for (int i = 0; i < (index - 1); ++i) {
