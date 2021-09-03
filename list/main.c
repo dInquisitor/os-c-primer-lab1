@@ -38,5 +38,6 @@ int main() {
   printf("Element at index 2 should be 1, it is %d\n", list_get_elem_at(l, 2));
   printf("Index of 0 should be 1, it is %d\n", list_get_index_of(l, 0));
   printf("Index of -5 should be -1 (doesn't exist), it is %d\n", list_get_index_of(l, -5));
+  list_free(l);
   return 0;
 }
