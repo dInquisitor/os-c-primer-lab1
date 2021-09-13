@@ -26,6 +26,8 @@ void list_free(list_t *l) {
     }
     free(to_free);
   }
+  l->head = NULL;
+  free(l);
 }
 
 void list_print(list_t *l) {
