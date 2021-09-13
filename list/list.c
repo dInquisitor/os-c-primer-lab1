@@ -21,6 +21,9 @@ void list_free(list_t *l) {
   while (node != NULL) {
     to_free = node;
     node = to_free->next;
+    if(to_free->next) {
+      to_free->next = NULL;
+    }
     free(to_free);
   }
 }

@@ -39,5 +39,6 @@ int main() {
   printf("Index of 0 should be 1, it is %d\n", list_get_index_of(l, 0));
   printf("Index of -5 should be -1 (doesn't exist), it is %d\n", list_get_index_of(l, -5));
   list_free(l);
+  list_print(l);
   return 0;
 }
